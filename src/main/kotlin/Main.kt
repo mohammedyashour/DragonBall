@@ -71,6 +71,8 @@ fun main() {
             "4" -> planet.showAllPlanetsPaginated()
             "5" -> quiz.startGame()
             "6" -> wordScrambleGame.startGame()
+            "7" -> wordScrambleGame.startGame()
+            "8" -> println( aboutDeveloper())
             "0" -> {
                 println("\n${getRandomColor()}${BOLD}✧ Thank you for using DragonBall Z CLI! ✧$RESET")
                 println("${getRandomColor()}   May your power level be over 9000!$RESET\n")
@@ -122,7 +124,41 @@ fun printAscii():String {
     """.trimIndent()
 return dragonBallAscii
 }
+fun aboutDeveloper():String{
+    return  """
+        About the Developer
 
+        👨‍💻 Name: Mohammed Ashour
+        🚀 Role: Kotlin/Android Developer
+        📧 Contact:medo.ash.2019@gmail.com
+        🔗 GitHub:github.com/mohammedyashour
+        💼 LinkedIn: linkedin.com/in/mohammedyehiaashour
+        Skills & Expertise
+
+            Languages: Kotlin, Java, Python
+
+            Android Development: Jetpack Compose, Room, Retrofit, Coroutines, Flow
+
+            Backend: Ktor, Spring Boot, SQL
+
+            Tools: Android Studio, IntelliJ IDEA, Git, Gradle
+
+        About This Project
+
+        This Dragon Ball App is a Kotlin-based application that demonstrates:
+        ✔ Modern Android Architecture (MVVM, Clean Architecture)
+        ✔ Database Management (Exposed ORM, SQLite)
+        ✔ API Integration (Ktor/Retrofit, JSON Serialization)
+        ✔ Best Practices (Coroutines, Dependency Injection, Modularization)
+        Get in Touch
+
+        I’m passionate about building clean, efficient, and scalable Android apps. Feel free to reach out for collaborations, feedback, or opportunities!
+
+        📩 Email: medo.ash.2019@gmail.com
+        🔗 GitHub: github.com/mohammedyashour
+        🔗 LinkedIn: linkedin.com/in/mohammedyehiaashour
+    """.trimIndent()
+}
 fun printMenuItem(number: String, icon: String, text: String) {
     val paddedText = text.padEnd(51)
     val numberColor = getRandomColor()

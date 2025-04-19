@@ -1,7 +1,7 @@
 package data
 
 object Constants {
-    val AppVersion = "DragonBall v1.0.0"
+    val AppVersion = "DragonBall v1.1.0"
 
     private val playerScores = mutableMapOf<String, Int>()
     private var currentPlayerName: String = ""
