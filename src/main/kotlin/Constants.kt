@@ -1,5 +1,3 @@
-package data
-
 object Constants {
     val AppVersion = "DragonBall v1.1.0"
 
