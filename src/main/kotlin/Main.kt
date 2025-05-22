@@ -7,6 +7,7 @@ import presentation.WordScrambleGame
 import data.network.ApiClient
 import data.network.DragonBallService
 import io.ktor.http.content.Version
+import org.koin.core.context.startKoin
 
 // ANSI Colors
 const val RESET = "\u001B[0m"
@@ -39,6 +40,10 @@ fun getRandomColor(): String = colors[Random.nextInt(colors.size)]
 
 
 fun main() {
+    startKoin {
+
+    }
+
     val constants:Constants= Constants
     println(printAscii())
     val service = DragonBallService(ApiClient.instance)

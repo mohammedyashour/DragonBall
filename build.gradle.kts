@@ -33,7 +33,9 @@ dependencies {
 
     // Test
     testImplementation(kotlin("test"))
+    //koin
 
+        implementation("io.insert-koin:koin-core:4.0.3")
 }
 
 tasks.test {
