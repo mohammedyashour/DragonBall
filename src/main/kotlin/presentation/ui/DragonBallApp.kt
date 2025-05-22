@@ -2,10 +2,12 @@ package presentation.ui
 
 import data.local.InitialDataSaver
 import io.ktor.client.*
+import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.cancel
 import org.koin.java.KoinJavaComponent.getKoin
 import presentation.ui.screens.AboutDeveloperCliScreen
 import presentation.ui.screens.CharacterCliScreen
@@ -30,15 +32,28 @@ class DragonBallApp(
 
 ) : UILauncher {
     override suspend fun start() {
+
         val client: HttpClient = getKoin().get()
-
         val loadingScope = CoroutineScope(Dispatchers.IO)
-        val loadingJob = showDragonBallLoading(loadingScope)
 
-        runBlocking {
-            InitialDataSaver.fetchAndCacheDataIfOnline(client)
-            loadingJob.cancel()
-        }
+    showDragonBallLoading(loadingScope)
+
+        val job = CompletableDeferred<Unit>()
+
+        InitialDataSaver.fetchAndCacheDataIfOnline(
+            client = client,
+            onSuccess = {
+                job.complete(Unit)
+                println("Done")
+            },
+            onFailure = {
+                println("❌ Failed: ${it.message}")
+                job.complete(Unit)
+            }
+        )
+
+        job.await()
+        loadingScope.cancel()
 
         val actions = listOf(
             UiAction("${Symbols.Person} Get Character by ID") {

@@ -21,9 +21,10 @@ fun showDragonBallLoading(
             )
             for (frame in frames) {
                 if (!scope.isActive) return@listOf
-                println("\r${frame.withStyle(color)}")
+                print("\r${frame.withStyle(color)}")
                 delay(300)
             }
+            print("\r${" ".repeat(30)}\r") // Clear the line
         },
 
         { _, color ->
@@ -39,18 +40,20 @@ fun showDragonBallLoading(
             var powerLevel = Random.nextInt(500, 5000)
             for (frame in frames) {
                 if (!scope.isActive) return@listOf
-                println("\rCharging ki: ${frame.withStyle(color)} ${powerLevel + Random.nextInt(100)}")
+                print("\rCharging ki: ${frame.withStyle(color)} ${(powerLevel + Random.nextInt(100)).toString().withStyle(TerminalColor.Green)}")
                 delay(100)
             }
+            print("\r${" ".repeat(40)}\r") // Clear the line
         },
 
         { _, color ->
             val dragonBalls = listOf("🔴", "🟠", "🟡", "🟢", "🔵", "🟣", "⭐")
             for ((index, ball) in dragonBalls.withIndex()) {
                 if (!scope.isActive) return@listOf
-                println("\rFinding Dragon Balls: ${dragonBalls.take(index + 1).joinToString("")} ${7 - index - 1} left")
+                print("\rFinding Dragon Balls: ${dragonBalls.take(index + 1).joinToString("")} ${7 - index - 1} left")
                 delay(400)
             }
+            print("\r${" ".repeat(40)}\r") // Clear the line
         },
 
         { _, color ->
@@ -58,9 +61,10 @@ fun showDragonBallLoading(
             for (i in 1..10) {
                 if (!scope.isActive) return@listOf
                 val waveSize = i % 5 + 1
-                println("\rKamehameha: ${wave.joinToString("").repeat(waveSize).withStyle(TerminalColor.Cyan)}")
+                print("\rKamehameha: ${wave.joinToString("").repeat(waveSize).withStyle(TerminalColor.Cyan)}")
                 delay(150)
             }
+            print("\r${" ".repeat(40)}\r") // Clear the line
         },
 
         { _, color ->
@@ -68,22 +72,18 @@ fun showDragonBallLoading(
             for (i in 1..5) {
                 if (!scope.isActive) return@listOf
                 val power = basePower * i * Random.nextInt(1, 10)
-                println("\r👓 Power Level: $power".withStyle(TerminalColor.Green))
+                print("\r👓 Power Level: ${power.toString().withStyle(TerminalColor.Green)}")
                 delay(300)
             }
             if (!scope.isActive) return@listOf
-            println("\r👓 IT'S OVER 9000!!!".withStyle(TerminalColor.Red))
+            print("\r👓 ${"IT'S OVER 9000!!!".withStyle(TerminalColor.Red)}")
             delay(500)
+            print("\r${" ".repeat(30)}\r") // Clear the line
         }
     )
 
     return scope.launch {
-        while (isActive) {
-            val randomAnimation = animations[Random.nextInt(animations.size)]
-            randomAnimation(scope, color)
-
-            if (!isActive) return@launch
-            delay(200)
-        }
+        val randomAnimation = animations[Random.nextInt(animations.size)]
+        randomAnimation(scope, color)
     }
 }

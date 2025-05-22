@@ -12,8 +12,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import kotlinx.serialization.builtins.ListSerializer
-import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.encodeToString
+
 import kotlinx.serialization.json.Json
 import java.io.File
 import java.net.InetAddress
@@ -26,8 +25,11 @@ object InitialDataSaver {
     private val charactersFile = File("data/characters.json")
     private val planetsFile = File("data/planets.json")
 
-    fun fetchAndCacheDataIfOnline(client: HttpClient) {
-
+    fun fetchAndCacheDataIfOnline(
+        client: HttpClient,
+        onSuccess: () -> Unit = {},
+        onFailure: (Throwable) -> Unit = {}
+    ) {
         scope.launch {
             runCatching { isOnline() }
                 .onFailure { println("❌ Failed to check internet: ${it.message}") }
@@ -57,10 +59,9 @@ object InitialDataSaver {
                         saveFile(charactersFile, characters, DragonBallCharacter.serializer())
                         saveFile(planetsFile, planets, Planet.serializer())
 
-                        println("✅ Data refreshed and saved successfully.")
-                    }.onFailure { error ->
-                        println("❌ Failed to fetch new data:")
-                        error.printStackTrace()
+                        onSuccess()
+                    }.onFailure {
+                        onFailure(it)
                     }
                 }
         }
