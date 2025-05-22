@@ -6,6 +6,7 @@ import data.characters.repository.CharacterRepositoryImpl
 import data.planets.datasource.PlanetApi
 import data.planets.datasource.PlanetRemoteDataSource
 import data.planets.repository.PlanetRepositoryImpl
+import domain.player.PlayerManager
 import domain.repository.CharacterRepository
 import domain.repository.PlanetRepository
 import domain.usecase.FilterCharactersUseCase
@@ -65,9 +66,9 @@ val appModule = module {
     // CLI Screens
     single { CharacterCliScreen(get(), get()) }
     single { PlanetCliScreen(get(), get(), get()) }
-    single { QuizGameCliScreen(get()) }
+    single { QuizGameCliScreen(get(),get ()) }
     single { WordScrambleCliScreen(get()) }
-
+    single { PlayerManager }
     // Launcher App (optional)
     single {
         DragonBallApp(

@@ -1,6 +1,7 @@
 package domain.usecase
 
 
+
 import domain.model.DragonBallCharacter
 import domain.repository.CharacterRepository
 import kotlin.random.Random
@@ -30,5 +31,9 @@ class PlayQuizGameUseCase(private val repository: CharacterRepository) {
             🏰 Affiliation: ${character.affiliation}
             📝 Description: ${character.description}
         """.trimIndent()
+    }
+
+    fun calculateScore(hintsUsed: Int, maxHints: Int = 3): Int {
+        return (maxHints - hintsUsed) * 10
     }
 }
