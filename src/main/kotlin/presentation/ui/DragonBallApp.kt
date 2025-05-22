@@ -1,5 +1,12 @@
 package presentation.ui
 
+import data.local.InitialDataSaver
+import io.ktor.client.*
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import org.koin.java.KoinJavaComponent.getKoin
 import presentation.ui.screens.AboutDeveloperCliScreen
 import presentation.ui.screens.CharacterCliScreen
 import presentation.ui.screens.LeaderboardCliScreen
@@ -10,6 +17,8 @@ import presentation.utils.BoxSymbols
 import presentation.utils.Symbols
 import presentation.utils.TerminalColor
 import presentation.utils.withStyle
+import presentation.utils.showDragonBallLoading
+import kotlin.system.exitProcess
 
 class DragonBallApp(
     private val characterScreen: CharacterCliScreen,
@@ -21,6 +30,16 @@ class DragonBallApp(
 
 ) : UILauncher {
     override suspend fun start() {
+        val client: HttpClient = getKoin().get()
+
+        val loadingScope = CoroutineScope(Dispatchers.IO)
+        val loadingJob = showDragonBallLoading(loadingScope)
+
+        runBlocking {
+            InitialDataSaver.fetchAndCacheDataIfOnline(client)
+            loadingJob.cancel()
+        }
+
         val actions = listOf(
             UiAction("${Symbols.Person} Get Character by ID") {
                 val id = promptForId("Enter Character ID")
@@ -59,9 +78,10 @@ class DragonBallApp(
             if (choice != null) {
                 println("\n➡ You selected: ${actions[choice - 1].name}".withStyle(TerminalColor.Cyan))
                 actions[choice - 1].action()
-                println("\n🔄 Press Enter to return to menu...".withStyle(TerminalColor.Reset))
-                readLine()
-
+                if (actions[choice - 1].name != "${Symbols.Exit} Exit") {
+                    println("\n🔄 Press Enter to return to menu...".withStyle(TerminalColor.Reset))
+                    readLine()
+                }
             } else {
                 println("❌ Invalid choice. Try again.".withStyle(TerminalColor.Red))
             }
@@ -89,9 +109,10 @@ class DragonBallApp(
         println(BoxSymbols.BottomLeft + BoxSymbols.Horizontal.repeat(boxWidth - 2) + BoxSymbols.BottomRight.withStyle(borderColor))
         print("\n👉 Enter your choice (1-${actions.size}): ".withStyle(TerminalColor.Yellow))
     }
+
     private fun exitApp() {
         println("\n👋 ${"Thank you for playing Dragon Ball CLI!".withStyle(TerminalColor.Green)}")
         println("💥 ${"May your power level be over 9000!".withStyle(TerminalColor.Purple)}\n")
-        kotlin.system.exitProcess(0)
+        exitProcess(0)
     }
 }

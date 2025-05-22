@@ -1,6 +1,6 @@
-package data.planets.repository
+package data.remote.planets.repository
 
-import data.planets.datasource.PlanetRemoteDataSource
+import data.remote.planets.datasource.PlanetRemoteDataSource
 import domain.repository.PlanetRepository
 
 class PlanetRepositoryImpl(private val remote: PlanetRemoteDataSource) : PlanetRepository {

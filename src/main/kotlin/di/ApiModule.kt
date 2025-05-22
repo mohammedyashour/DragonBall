@@ -1,7 +1,7 @@
 package di
 
-import data.characters.dataSource.CharacterApi
-import data.planets.datasource.PlanetApi
+import data.remote.characters.dataSource.CharacterApi
+import data.remote.planets.datasource.PlanetApi
 import org.koin.dsl.module
 
 val apiModule = module {

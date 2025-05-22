@@ -1,4 +1,4 @@
-package data.characters.dataSource
+package data.remote.characters.dataSource
 
 import domain.model.DragonBallCharacter
 

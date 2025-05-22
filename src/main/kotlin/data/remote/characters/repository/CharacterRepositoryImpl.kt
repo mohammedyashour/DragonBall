@@ -1,6 +1,6 @@
-package data.characters.repository
+package data.remote.characters.repository
 
-import data.characters.dataSource.CharacterRemoteDataSource
+import data.remote.characters.dataSource.CharacterRemoteDataSource
 import domain.repository.CharacterRepository
 
 class CharacterRepositoryImpl(private val remote: CharacterRemoteDataSource) : CharacterRepository {

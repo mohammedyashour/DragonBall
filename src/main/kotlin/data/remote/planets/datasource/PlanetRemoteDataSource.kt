@@ -1,4 +1,4 @@
-package data.planets.datasource
+package data.remote.planets.datasource
 
 class PlanetRemoteDataSource(private val api: PlanetApi) {
     suspend fun getPlanet(id: Int) = api.getPlanet(id)
