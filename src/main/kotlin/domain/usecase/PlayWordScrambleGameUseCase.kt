@@ -1,33 +1,34 @@
 package domain.usecase
 
-
 import domain.model.DragonBallCharacter
 import domain.repository.CharacterRepository
 import kotlin.random.Random
 
-class PlayWordScrambleGameUseCase(
-    private val repository: CharacterRepository
-) {
+class PlayWordScrambleGameUseCase(private val repository: CharacterRepository) {
+
     suspend fun getRandomCharacter(minId: Int = 1, maxId: Int = 50): DragonBallCharacter {
-        val randomId = Random.nextInt(minId, maxId + 1)
-        return repository.getCharacter(randomId)
+        val id = Random.nextInt(minId, maxId + 1)
+        return repository.getCharacter(id)
     }
 
     fun scrambleName(name: String): String {
         return name.uppercase().toCharArray().apply {
             for (i in indices) {
                 val j = Random.nextInt(i, size)
-                val temp = this[i]
+                val tmp = this[i]
                 this[i] = this[j]
-                this[j] = temp
+                this[j] = tmp
             }
         }.concatToString()
     }
 
     fun generateHint(name: String, lettersToShow: Int): String {
-        return name.mapIndexed { i, c ->
-            if (i < lettersToShow) c.uppercaseChar() else '_'
-        }.joinToString(" ")
+        val hint = StringBuilder()
+        for (i in name.indices) {
+            hint.append(if (i < lettersToShow) name[i].uppercase() else "_")
+            hint.append(" ")
+        }
+        return hint.toString()
     }
 
     fun characterDetails(character: DragonBallCharacter): String {
@@ -39,5 +40,9 @@ class PlayWordScrambleGameUseCase(
             🏰 Affiliation: ${character.affiliation}
             📝 Description: ${character.description.take(100)}...
         """.trimIndent()
+    }
+
+    fun calculateScore(hintsUsed: Int, maxHints: Int = 3): Int {
+        return 50 - (hintsUsed * 10)
     }
 }

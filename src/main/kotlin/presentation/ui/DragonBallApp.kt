@@ -10,8 +10,8 @@ class DragonBallApp(
     private val planetScreen: PlanetCliScreen,
     private val quizGame: QuizGameCliScreen,
     private val wordScrambleGame: WordScrambleCliScreen
-) {
-    suspend fun start() {
+) : UILauncher{
+    override suspend fun start() {
         val actions = listOf(
             UiAction("${Symbols.Person} Get Character by ID") {
                 print("Enter Character ID: ".withStyle(TerminalColor.Yellow))

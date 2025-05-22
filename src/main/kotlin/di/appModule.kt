@@ -67,7 +67,7 @@ val appModule = module {
     single { CharacterCliScreen(get(), get()) }
     single { PlanetCliScreen(get(), get(), get()) }
     single { QuizGameCliScreen(get(),get ()) }
-    single { WordScrambleCliScreen(get()) }
+    single { WordScrambleCliScreen(get(),get (  )) }
     single { PlayerManager }
     // Launcher App (optional)
     single {
