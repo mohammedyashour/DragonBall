@@ -8,5 +8,6 @@ class CharacterRepositoryImpl(private val remote: CharacterRemoteDataSource) : C
     override suspend fun getAllCharacters() = remote.getAllCharacters()
     override suspend fun filterCharacters(race: String?, affiliation: String?, gender: String?) =
         remote.filterCharacters(race, affiliation, gender)
+
     override suspend fun getCharactersPaginated(page: Int, limit: Int) = remote.getCharactersPaginated(page, limit)
 }

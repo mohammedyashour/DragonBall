@@ -1,4 +1,4 @@
-package domain.usecase
+package domain.usecase.characters
 
 import domain.repository.CharacterRepository
 

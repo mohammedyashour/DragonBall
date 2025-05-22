@@ -3,9 +3,8 @@ package data.characters.dataSource
 import domain.model.ApiResponse
 import domain.model.DragonBallCharacter
 import io.ktor.client.*
-import io.ktor.client.call.body
-import io.ktor.client.request.get
-import io.ktor.client.request.parameter
+import io.ktor.client.call.*
+import io.ktor.client.request.*
 
 class CharacterApi(private val client: HttpClient) {
     private val baseUrl = "https://dragonball-api.com/api"

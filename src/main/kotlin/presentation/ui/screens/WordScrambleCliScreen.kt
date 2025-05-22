@@ -1,7 +1,7 @@
-package presentation.ui
+package presentation.ui.screens
 
 import domain.player.PlayerManager
-import domain.usecase.PlayWordScrambleGameUseCase
+import domain.usecase.games.PlayWordScrambleGameUseCase
 import kotlinx.coroutines.runBlocking
 
 class WordScrambleCliScreen(

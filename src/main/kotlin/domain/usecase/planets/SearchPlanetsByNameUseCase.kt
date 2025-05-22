@@ -1,4 +1,4 @@
-package domain.usecase
+package domain.usecase.planets
 
 import domain.repository.PlanetRepository
 

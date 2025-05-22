@@ -9,4 +9,5 @@ object Symbols {
     const val Scramble = "🔤"
     const val Exit = "🚪"
     const val Cup = "🏆"
+    const val Developer = "👨🏻‍💻"
 }

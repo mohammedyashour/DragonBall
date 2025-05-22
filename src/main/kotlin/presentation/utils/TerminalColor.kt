@@ -9,4 +9,5 @@ enum class TerminalColor(val code: String) {
     Purple("\u001B[35m"),
     Cyan("\u001B[36m")
 }
+
 fun String.withStyle(color: TerminalColor): String = "${color.code}$this${TerminalColor.Reset.code}"

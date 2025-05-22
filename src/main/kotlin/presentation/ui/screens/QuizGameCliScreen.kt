@@ -1,7 +1,7 @@
-package presentation.ui
+package presentation.ui.screens
 
 import domain.player.PlayerManager
-import domain.usecase.PlayQuizGameUseCase
+import domain.usecase.games.PlayQuizGameUseCase
 import kotlinx.coroutines.runBlocking
 
 class QuizGameCliScreen(
@@ -14,11 +14,13 @@ class QuizGameCliScreen(
     private lateinit var currentPlayer: String
 
     fun start(): Unit = runBlocking {
-        println("""
+        println(
+            """
             **************************************
             *  DRAGON BALL CHARACTER QUIZ GAME   *
             **************************************
-        """.trimIndent())
+        """.trimIndent()
+        )
 
         currentPlayer = playerManager.getPlayerName().takeIf { it.isNotBlank() } ?: run {
             print("Enter your name: ")
@@ -60,27 +62,33 @@ class QuizGameCliScreen(
                     }
                     continue
                 }
+
                 input == character.name.lowercase() -> {
                     guessedCorrectly = true
                     val pointsEarned = playGame.calculateScore(hintsUsed)
                     currentScore += pointsEarned
-                    println("""
+                    println(
+                        """
                         🎉 CORRECT! It's ${character.name}!
                         💰 Points earned: $pointsEarned
                         🏆 Total score: $currentScore
 
                         ${playGame.characterDetails(character)}
-                    """.trimIndent())
+                    """.trimIndent()
+                    )
                 }
+
                 else -> {
                     attempts++
                     if (attempts < maxAttempts) {
                         println("❌ Incorrect! Try again or type 'hint' for a clue (${maxHints - hintsUsed} hints left)")
                     } else {
-                        println("""
+                        println(
+                            """
                             😢 Game Over! The character was ${character.name}
                             ${playGame.characterDetails(character)}
-                        """.trimIndent())
+                        """.trimIndent()
+                        )
                     }
                 }
             }
@@ -92,6 +100,7 @@ class QuizGameCliScreen(
                 hintsUsed = 0
                 playRound()
             }
+
             else -> endGame()
         }
     }
@@ -99,7 +108,8 @@ class QuizGameCliScreen(
     private fun endGame() {
         playerManager.saveScore(currentPlayer, currentScore)
         val top = playerManager.getHighScores()
-        println("""
+        println(
+            """
             **************************************
             *           GAME OVER               *
             **************************************
@@ -108,6 +118,7 @@ class QuizGameCliScreen(
             ${top.entries.take(5).joinToString("\n") { (n, s) -> "${top.keys.indexOf(n) + 1}. $n: $s points" }}
 
             Thanks for playing, $currentPlayer!
-        """.trimIndent())
+        """.trimIndent()
+        )
     }
 }

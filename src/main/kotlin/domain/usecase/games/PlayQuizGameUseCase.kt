@@ -1,5 +1,4 @@
-package domain.usecase
-
+package domain.usecase.games
 
 
 import domain.model.DragonBallCharacter

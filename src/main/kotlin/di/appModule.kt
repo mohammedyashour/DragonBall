@@ -10,14 +10,22 @@ import domain.player.GetLeaderboardUseCase
 import domain.player.PlayerManager
 import domain.repository.CharacterRepository
 import domain.repository.PlanetRepository
-import domain.usecase.*
+import domain.usecase.characters.FilterCharactersUseCase
+import domain.usecase.characters.GetCharacterUseCase
+import domain.usecase.characters.GetCharactersPaginatedUseCase
+import domain.usecase.games.PlayQuizGameUseCase
+import domain.usecase.games.PlayWordScrambleGameUseCase
+import domain.usecase.planets.GetPlanetUseCase
+import domain.usecase.planets.GetPlanetsPaginatedUseCase
+import domain.usecase.planets.SearchPlanetsByNameUseCase
 import io.ktor.client.*
 import io.ktor.client.engine.cio.*
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.serialization.kotlinx.json.*
 import kotlinx.serialization.json.Json
 import org.koin.dsl.module
-import presentation.ui.*
+import presentation.ui.DragonBallApp
+import presentation.ui.screens.*
 
 val appModule = module {
     single {

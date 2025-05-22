@@ -1,8 +1,8 @@
-package presentation.ui
+package presentation.ui.screens
 
-import domain.usecase.GetPlanetUseCase
-import domain.usecase.GetPlanetsPaginatedUseCase
-import domain.usecase.SearchPlanetsByNameUseCase
+import domain.usecase.planets.GetPlanetUseCase
+import domain.usecase.planets.GetPlanetsPaginatedUseCase
+import domain.usecase.planets.SearchPlanetsByNameUseCase
 import kotlinx.coroutines.runBlocking
 
 class PlanetCliScreen(

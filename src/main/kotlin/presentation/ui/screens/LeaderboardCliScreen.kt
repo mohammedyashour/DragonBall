@@ -1,7 +1,8 @@
-package presentation.ui
+package presentation.ui.screens
 
 
 import domain.player.GetLeaderboardUseCase
+import presentation.ui.UILauncher
 import presentation.utils.TerminalColor
 import presentation.utils.withStyle
 
@@ -12,10 +13,12 @@ class LeaderboardCliScreen(
     override suspend fun start() {
         val scores = getLeaderboardUseCase.execute()
 
-        println("""
+        println(
+            """
             ${"🏆 Leaderboard".withStyle(TerminalColor.Green)}
             ${"=".repeat(30)}
-        """.trimIndent())
+        """.trimIndent()
+        )
 
         if (scores.isEmpty()) {
             println("${"No players found yet.".withStyle(TerminalColor.Red)}\n")

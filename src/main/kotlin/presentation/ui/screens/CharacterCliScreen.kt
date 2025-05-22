@@ -1,7 +1,7 @@
-package presentation.ui
+package presentation.ui.screens
 
-import domain.usecase.GetCharacterUseCase
-import domain.usecase.GetCharactersPaginatedUseCase
+import domain.usecase.characters.GetCharacterUseCase
+import domain.usecase.characters.GetCharactersPaginatedUseCase
 import kotlinx.coroutines.runBlocking
 
 class CharacterCliScreen(
