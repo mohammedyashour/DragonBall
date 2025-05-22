@@ -6,28 +6,18 @@ import data.characters.repository.CharacterRepositoryImpl
 import data.planets.datasource.PlanetApi
 import data.planets.datasource.PlanetRemoteDataSource
 import data.planets.repository.PlanetRepositoryImpl
+import domain.player.GetLeaderboardUseCase
 import domain.player.PlayerManager
 import domain.repository.CharacterRepository
 import domain.repository.PlanetRepository
-import domain.usecase.FilterCharactersUseCase
-import domain.usecase.GetCharacterUseCase
-import domain.usecase.GetCharactersPaginatedUseCase
-import domain.usecase.GetPlanetUseCase
-import domain.usecase.GetPlanetsPaginatedUseCase
-import domain.usecase.PlayQuizGameUseCase
-import domain.usecase.PlayWordScrambleGameUseCase
-import domain.usecase.SearchPlanetsByNameUseCase
+import domain.usecase.*
 import io.ktor.client.*
 import io.ktor.client.engine.cio.*
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.serialization.kotlinx.json.*
 import kotlinx.serialization.json.Json
 import org.koin.dsl.module
-import presentation.ui.CharacterCliScreen
-import presentation.ui.DragonBallApp
-import presentation.ui.PlanetCliScreen
-import presentation.ui.QuizGameCliScreen
-import presentation.ui.WordScrambleCliScreen
+import presentation.ui.*
 
 val appModule = module {
     single {
@@ -66,16 +56,22 @@ val appModule = module {
     // CLI Screens
     single { CharacterCliScreen(get(), get()) }
     single { PlanetCliScreen(get(), get(), get()) }
-    single { QuizGameCliScreen(get(),get ()) }
-    single { WordScrambleCliScreen(get(),get (  )) }
+    single { QuizGameCliScreen(get(), get()) }
+    single { WordScrambleCliScreen(get(), get()) }
     single { PlayerManager }
+    single { AboutDeveloperCliScreen() }
+
+    single { GetLeaderboardUseCase(get()) }
+    single { LeaderboardCliScreen(get()) }
     // Launcher App (optional)
     single {
         DragonBallApp(
-            get(), // CharacterCliScreen
-            get(), // PlanetCliScreen
-            get(), // QuizGameCliScreen
-            get()  // WordScrambleCliScreen
+            get(),
+            get(),
+            get(),
+            get(),
+            get(),
+            get()
         )
     }
 }
