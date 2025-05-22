@@ -4,11 +4,11 @@ import domain.model.DragonBallCharacter
 import domain.repository.CharacterRepository
 import kotlin.random.Random
 
-class PlayWordScrambleGameUseCase(private val repository: CharacterRepository) {
+class PlayWordScrambleGameUseCase(private val characterRepository: CharacterRepository) {
 
     suspend fun getRandomCharacter(minId: Int = 1, maxId: Int = 50): DragonBallCharacter {
         val id = Random.nextInt(minId, maxId + 1)
-        return repository.getCharacter(id)
+        return characterRepository.getCharacter(id)
     }
 
     fun scrambleName(name: String): String {

@@ -3,7 +3,7 @@ package domain.usecase.planets
 import domain.repository.PlanetRepository
 
 class GetPlanetsPaginatedUseCase(
-    private val repository: PlanetRepository
+    private val planetRepository: PlanetRepository
 ) {
-    suspend operator fun invoke(page: Int, limit: Int) = repository.getPlanetsPaginated(page, limit)
+    suspend operator fun invoke(page: Int, limit: Int) = planetRepository.getPlanetsPaginated(page, limit)
 }

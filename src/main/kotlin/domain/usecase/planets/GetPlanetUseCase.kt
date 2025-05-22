@@ -3,7 +3,7 @@ package domain.usecase.planets
 import domain.repository.PlanetRepository
 
 class GetPlanetUseCase(
-    private val repository: PlanetRepository
+    private val planetRepository: PlanetRepository
 ) {
-    suspend operator fun invoke(id: Int) = repository.getPlanet(id)
+    suspend operator fun invoke(id: Int) = planetRepository.getPlanet(id)
 }

@@ -5,11 +5,11 @@ import domain.model.DragonBallCharacter
 import domain.repository.CharacterRepository
 import kotlin.random.Random
 
-class PlayQuizGameUseCase(private val repository: CharacterRepository) {
+class PlayQuizGameUseCase(private val characterRepository: CharacterRepository) {
 
     suspend fun getRandomCharacter(minId: Int = 1, maxId: Int = 50): DragonBallCharacter {
         val id = Random.nextInt(minId, maxId + 1)
-        return repository.getCharacter(id)
+        return characterRepository.getCharacter(id)
     }
 
     fun getHint(character: DragonBallCharacter, level: Int): String {

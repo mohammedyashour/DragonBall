@@ -8,5 +8,4 @@ suspend fun main() {
 
     val ui: DragonBallApp = getKoin().get()
     ui.start()
-
 }

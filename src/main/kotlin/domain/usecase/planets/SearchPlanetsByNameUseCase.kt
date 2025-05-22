@@ -3,7 +3,7 @@ package domain.usecase.planets
 import domain.repository.PlanetRepository
 
 class SearchPlanetsByNameUseCase(
-    private val repository: PlanetRepository
+    private val planetRepository: PlanetRepository
 ) {
-    suspend operator fun invoke(name: String) = repository.searchPlanetsByName(name)
+    suspend operator fun invoke(name: String) = planetRepository.searchPlanetsByName(name)
 }

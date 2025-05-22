@@ -3,7 +3,7 @@ package domain.usecase.characters
 import domain.repository.CharacterRepository
 
 class GetCharacterUseCase(
-    private val repository: CharacterRepository
+    private val characterRepository: CharacterRepository
 ) {
-    suspend operator fun invoke(id: Int) = repository.getCharacter(id)
+    suspend operator fun invoke(id: Int) = characterRepository.getCharacter(id)
 }
