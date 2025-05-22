@@ -4,9 +4,7 @@ import org.koin.java.KoinJavaComponent.getKoin
 import presentation.ui.DragonBallApp
 
 suspend fun main() {
-    startKoin {
-        modules(appModule)
-    }
+    startKoin { modules(appModule) }
 
     val ui: DragonBallApp = getKoin().get()
     ui.start()

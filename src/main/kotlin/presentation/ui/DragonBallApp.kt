@@ -49,8 +49,7 @@ class DragonBallApp(
                 aboutDeveloperCliScreen.start()
             },
             UiAction("${Symbols.Exit} Exit") {
-                println("👋 Goodbye! May your power be over 9000!".withStyle(TerminalColor.Green))
-                return@UiAction
+                exitApp()
             }
         )
 
@@ -62,6 +61,7 @@ class DragonBallApp(
                 actions[choice - 1].action()
                 println("\n🔄 Press Enter to return to menu...".withStyle(TerminalColor.Reset))
                 readLine()
+
             } else {
                 println("❌ Invalid choice. Try again.".withStyle(TerminalColor.Red))
             }
@@ -88,5 +88,10 @@ class DragonBallApp(
 
         println(BoxSymbols.BottomLeft + BoxSymbols.Horizontal.repeat(boxWidth - 2) + BoxSymbols.BottomRight.withStyle(borderColor))
         print("\n👉 Enter your choice (1-${actions.size}): ".withStyle(TerminalColor.Yellow))
+    }
+    private fun exitApp() {
+        println("\n👋 ${"Thank you for playing Dragon Ball CLI!".withStyle(TerminalColor.Green)}")
+        println("💥 ${"May your power level be over 9000!".withStyle(TerminalColor.Purple)}\n")
+        kotlin.system.exitProcess(0)
     }
 }
