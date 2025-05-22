@@ -17,4 +17,5 @@ object AppBanner {
             ${getRandomColor()}▀▀▀▀▀• .▀  ▀ ▀  ▀ ·▀▀▀▀  ▀█▄▀▪▀▀ █▪    ·▀▀▀▀  ▀  ▀ .▀▀▀ .▀▀▀ ${TerminalColor.Reset}
         """.trimIndent()
     }
+
 }
