@@ -13,5 +13,11 @@ val repositoryModule = module {
             get()
         )
     }
-    single<PlanetRepository> { PlanetRepositoryImpl(get(),get()) }
+    single<PlanetRepository>
+    {
+        PlanetRepositoryImpl(
+            get(),
+            get()
+        )
+    }
 }

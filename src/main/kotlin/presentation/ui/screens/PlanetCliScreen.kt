@@ -28,18 +28,28 @@ class PlanetCliScreen(
     }
 
     fun showAllPlanetsPaginated() = runBlocking {
-        var page = 1
         val limit = 10
-        var total = 0
+        var page = 1
+
         while (true) {
             val response = getPaginated(page, limit)
-            response.meta?.let { total = it.totalItems }
+            val totalItems = response.meta?.totalItems ?: response.items.size
+
+            if (response.items.isEmpty()) {
+                println("❌ No planets found.")
+                break
+            }
+
             val start = (page - 1) * limit + 1
-            println("\n🌍 Planets $start-${start + response.items.size - 1} of $total")
+            val end = (start + response.items.size - 1).coerceAtMost(totalItems)
+
+            println("\n🌍 Planets $start-$end of $totalItems")
             response.items.forEachIndexed { index, p ->
                 println("${start + index}. ${p.name} ${if (p.isDestroyed) "💥" else "🌱"}")
             }
-            if (page * limit >= total) break
+
+            if (end >= totalItems) break
+
             print("⏭ Press any key to continue or 'q' to quit: ")
             if (readLine()?.lowercase() == "q") break
             page++

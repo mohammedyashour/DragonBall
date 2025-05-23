@@ -15,7 +15,7 @@ object LanguageManager {
         bundle = ResourceBundle.getBundle("i18n/strings", locale)
     }
 
-    fun t(key: String, vararg args: Any): String {
+    fun text(key: String, vararg args: Any): String {
         val value = bundle.getString(key)
         return if (args.isNotEmpty()) MessageFormat.format(value, *args) else value
     }

@@ -34,7 +34,7 @@ object InitialDataSaver {
             runCatching { isOnline() }
                 .onSuccess { online ->
                     if (!online) {
-                        onFailure() // ✅ مباشرة استخدم البيانات المحلية بصمت
+                        onFailure()
                         return@launch
                     }
 
@@ -58,13 +58,13 @@ object InitialDataSaver {
                         saveFile(charactersFile, characters, DragonBallCharacter.serializer())
                         saveFile(planetsFile, planets, Planet.serializer())
 
-                        onSuccess() // ✅ عند النجاح
+                        onSuccess()
                     }.onFailure {
-                        onFailure() // ✅ إذا فشل حتى مع الاتصال
+                        onFailure()
                     }
                 }
                 .onFailure {
-                    onFailure() // ✅ في حال فشل فحص الاتصال أصلاً
+                    onFailure()
                 }
         }
     }

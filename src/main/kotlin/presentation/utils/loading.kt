@@ -24,7 +24,7 @@ fun showDragonBallLoading(
                 print("\r${frame.withStyle(color)}")
                 delay(300)
             }
-            print("\r${" ".repeat(30)}\r") // Clear the line
+            print("\r${" ".repeat(30)}\r")
         },
 
         { _, color ->
@@ -43,7 +43,7 @@ fun showDragonBallLoading(
                 print("\rCharging ki: ${frame.withStyle(color)} ${(powerLevel + Random.nextInt(100)).toString().withStyle(TerminalColor.Green)}")
                 delay(100)
             }
-            print("\r${" ".repeat(40)}\r") // Clear the line
+            print("\r${" ".repeat(40)}\r")
         },
 
         { _, color ->
@@ -53,7 +53,7 @@ fun showDragonBallLoading(
                 print("\rFinding Dragon Balls: ${dragonBalls.take(index + 1).joinToString("")} ${7 - index - 1} left")
                 delay(400)
             }
-            print("\r${" ".repeat(40)}\r") // Clear the line
+            print("\r${" ".repeat(40)}\r")
         },
 
         { _, color ->
@@ -64,7 +64,7 @@ fun showDragonBallLoading(
                 print("\rKamehameha: ${wave.joinToString("").repeat(waveSize).withStyle(TerminalColor.Cyan)}")
                 delay(150)
             }
-            print("\r${" ".repeat(40)}\r") // Clear the line
+            print("\r${" ".repeat(40)}\r")
         },
 
         { _, color ->
@@ -78,7 +78,7 @@ fun showDragonBallLoading(
             if (!scope.isActive) return@listOf
             print("\r👓 ${"IT'S OVER 9000!!!".withStyle(TerminalColor.Red)}")
             delay(500)
-            print("\r${" ".repeat(30)}\r") // Clear the line
+            print("\r${" ".repeat(30)}\r")
         }
     )
 

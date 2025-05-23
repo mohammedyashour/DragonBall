@@ -1,5 +1,6 @@
 package presentation.ui.screens
 
+import i18n.LanguageManager.text
 import presentation.ui.UILauncher
 import presentation.utils.TerminalColor
 import presentation.utils.withStyle
@@ -11,7 +12,7 @@ class AboutDeveloperCliScreen : UILauncher {
             """
             ${"👨‍💻 About the Developer".withStyle(TerminalColor.Cyan)}
 
-            👤 ${"Name:".withStyle(TerminalColor.Yellow)} Mohammed Ashour
+            👤 ${"Name:".withStyle(TerminalColor.Yellow)}  ${text("developer.name")}
             🚀 ${"Role:".withStyle(TerminalColor.Yellow)} Kotlin/Android Developer
             📧 ${"Contact:".withStyle(TerminalColor.Yellow)} medo.ash.2019@gmail.com
             🔗 ${"GitHub:".withStyle(TerminalColor.Yellow)} github.com/mohammedyashour

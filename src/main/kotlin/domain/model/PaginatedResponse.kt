@@ -8,6 +8,7 @@ data class ApiResponse<T>(
     val items: List<T>,
     val meta: MetaData? = null,
     val links: PaginationLinks? = null
+
 )
 
 @Serializable
