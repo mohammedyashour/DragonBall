@@ -47,7 +47,7 @@ class DragonBallApp(
                 println("Done")
             },
             onFailure = {
-                println("❌ Failed: ${it.message}")
+                println("\nYou are offline \n")
                 job.complete(Unit)
             }
         )
@@ -88,6 +88,7 @@ class DragonBallApp(
         )
 
         while (true) {
+            println("")
             printMenu(actions)
             val choice = readLine()?.toIntOrNull()?.takeIf { it in 1..actions.size }
             if (choice != null) {

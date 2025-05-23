@@ -27,15 +27,14 @@ object InitialDataSaver {
 
     fun fetchAndCacheDataIfOnline(
         client: HttpClient,
-        onSuccess: () -> Unit = {},
-        onFailure: (Throwable) -> Unit = {}
+        onSuccess: () -> Unit,
+        onFailure: () -> Unit
     ) {
         scope.launch {
             runCatching { isOnline() }
-                .onFailure { println("❌ Failed to check internet: ${it.message}") }
                 .onSuccess { online ->
                     if (!online) {
-                        println("🌐 No internet connection. Skipping data fetch.")
+                        onFailure() // ✅ مباشرة استخدم البيانات المحلية بصمت
                         return@launch
                     }
 
@@ -59,10 +58,13 @@ object InitialDataSaver {
                         saveFile(charactersFile, characters, DragonBallCharacter.serializer())
                         saveFile(planetsFile, planets, Planet.serializer())
 
-                        onSuccess()
+                        onSuccess() // ✅ عند النجاح
                     }.onFailure {
-                        onFailure(it)
+                        onFailure() // ✅ إذا فشل حتى مع الاتصال
                     }
+                }
+                .onFailure {
+                    onFailure() // ✅ في حال فشل فحص الاتصال أصلاً
                 }
         }
     }

@@ -1,13 +1,48 @@
-package data.remote.characters.repository
-
+import data.local.characters.CharacterLocalDataSource
 import data.remote.characters.dataSource.CharacterRemoteDataSource
+import domain.model.ApiResponse
+import domain.model.DragonBallCharacter
 import domain.repository.CharacterRepository
+import java.net.InetAddress
 
-class CharacterRepositoryImpl(private val remote: CharacterRemoteDataSource) : CharacterRepository {
-    override suspend fun getCharacter(id: Int) = remote.getCharacter(id)
-    override suspend fun getAllCharacters() = remote.getAllCharacters()
+class CharacterRepositoryImpl(
+    private val remote: CharacterRemoteDataSource,
+    private val local: CharacterLocalDataSource
+) : CharacterRepository {
+
+    private fun isOnline(): Boolean = runCatching {
+        val address = InetAddress.getByName("google.com")
+        address.toString().isNotEmpty()
+    }.getOrDefault(false)
+
+    override suspend fun getCharacter(id: Int): DragonBallCharacter {
+        return local.getCharacterById(id)
+            ?: if (isOnline()) remote.getCharacter(id)
+            else throw IllegalStateException("Character not found locally and no internet connection.")
+    }
+
+
+    override suspend fun getAllCharacters(): List<DragonBallCharacter> {
+        return if (isOnline()) {
+            runCatching { remote.getAllCharacters() }.getOrElse { local.getAllCharacters() }
+        } else {
+            local.getAllCharacters()
+        }
+    }
+
     override suspend fun filterCharacters(race: String?, affiliation: String?, gender: String?) =
-        remote.filterCharacters(race, affiliation, gender)
+        if (isOnline()) remote.filterCharacters(race, affiliation, gender)
+        else local.filterCharacters(race, affiliation, gender)
 
-    override suspend fun getCharactersPaginated(page: Int, limit: Int) = remote.getCharactersPaginated(page, limit)
+    override suspend fun getCharactersPaginated(page: Int, limit: Int): ApiResponse<DragonBallCharacter> {
+        return if (isOnline()) {
+            remote.getCharactersPaginated(page, limit)
+        } else {
+            val cached = local.getAllCharacters()
+            val from = (page - 1) * limit
+            val to = (from + limit).coerceAtMost(cached.size)
+            if (from >= cached.size) ApiResponse(emptyList())
+            else ApiResponse(cached.subList(from, to))
+        }
+    }
 }

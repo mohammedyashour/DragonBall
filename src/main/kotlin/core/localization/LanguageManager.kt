@@ -1,25 +1,22 @@
-package presentation.i18n
+package i18n
 
+import java.text.MessageFormat
 import java.util.*
 
-object LocalizationManager {
-    private var locale: Locale = Locale("en")
-    private var bundle: ResourceBundle = loadBundle()
+object LanguageManager {
+    private var bundle: ResourceBundle = ResourceBundle.getBundle("i18n/strings", Locale("en"))
 
-    private fun loadBundle(): ResourceBundle {
-        return ResourceBundle.getBundle("i18n.strings", locale)
-    }
-
-    fun setLanguage(languageCode: String) {
-        locale = Locale(languageCode)
-        bundle = loadBundle()
-    }
-
-    fun translate(key: String): String {
-        return try {
-            bundle.getString(key)
-        } catch (e: MissingResourceException) {
-            "??$key??"
+    fun setLanguage(lang: String) {
+        val locale = when (lang.lowercase()) {
+            "ar" -> Locale("ar")
+            "en" -> Locale("en")
+            else -> Locale("en")
         }
+        bundle = ResourceBundle.getBundle("i18n/strings", locale)
+    }
+
+    fun t(key: String, vararg args: Any): String {
+        val value = bundle.getString(key)
+        return if (args.isNotEmpty()) MessageFormat.format(value, *args) else value
     }
 }

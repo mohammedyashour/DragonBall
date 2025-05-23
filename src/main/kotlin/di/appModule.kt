@@ -6,5 +6,6 @@ package di
         dataSourceModule,
         repositoryModule,
         useCaseModule,
-        presentationModule
+        presentationModule,
+        localModule
     )

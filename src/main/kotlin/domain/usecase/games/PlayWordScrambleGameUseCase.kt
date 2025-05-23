@@ -6,10 +6,14 @@ import kotlin.random.Random
 
 class PlayWordScrambleGameUseCase(private val characterRepository: CharacterRepository) {
 
-    suspend fun getRandomCharacter(minId: Int = 1, maxId: Int = 50): DragonBallCharacter {
-        val id = Random.nextInt(minId, maxId + 1)
-        return characterRepository.getCharacter(id)
+    suspend fun getRandomCharacter(): DragonBallCharacter {
+        val allCharacters = characterRepository.getAllCharacters()
+        if (allCharacters.isEmpty()) {
+            throw IllegalStateException("❌ No characters available to choose from.")
+        }
+        return allCharacters.random()
     }
+
 
     fun scrambleName(name: String): String {
         return name.uppercase().toCharArray().apply {
