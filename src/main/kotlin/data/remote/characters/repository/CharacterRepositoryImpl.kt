@@ -41,8 +41,18 @@ class CharacterRepositoryImpl(
             val cached = local.getAllCharacters()
             val from = (page - 1) * limit
             val to = (from + limit).coerceAtMost(cached.size)
-            if (from >= cached.size) ApiResponse(emptyList())
-            else ApiResponse(cached.subList(from, to))
+            val items = if (from < cached.size) cached.subList(from, to) else emptyList()
+
+            ApiResponse(
+                items = items,
+                meta = domain.model.MetaData(
+                    totalItems = cached.size,
+                    itemCount = items.size,
+                    itemsPerPage = limit,
+                    totalPages = (cached.size + limit - 1) / limit,
+                    currentPage = page
+                )
+            )
         }
     }
 }
